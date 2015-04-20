@@ -1,0 +1,50 @@
+package limitd;
+
+message Response {
+  extensions 100 to max;
+
+  required string request_id = 1;
+
+  enum Type {
+    ERROR = 1;
+    TAKE = 2;
+    PUT = 2;
+  }
+
+  required Type type = 2;
+}
+
+message ErrorResponse {
+  extend Response {
+    optional ErrorResponse response = 100;
+  }
+
+  enum Type {
+    UNKNOWN_BUCKET_TYPE = 1;
+  }
+
+  required Type type = 1;
+}
+
+message TakeResponse {
+  extend Response {
+    optional TakeResponse response = 101;
+  }
+
+  required bool conformant = 1;
+  optional bool delayed = 2 [default = false];
+
+  required int32 remaining = 3;
+  required int32 reset = 4;
+  required int32 limit = 5;
+}
+
+message PutResponse {
+  extend Response {
+    optional PutResponse response = 102;
+  }
+
+  required int32 remaining = 1;
+  required int32 reset = 2;
+  required int32 limit = 3;
+}

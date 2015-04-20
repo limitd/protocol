@@ -1,0 +1,16 @@
+{
+  "name": "limitd-protocol",
+  "version": "1.0.0",
+  "description": "The ",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "~2.2.0",
+    "mocha": "~2.2.4",
+    "protobufjs": "~4.0.0-b2"
+  }
+}
