@@ -1,4 +1,5 @@
 var protocol = require('./protocol');
+var assert = require('chai').assert;
 
 var Request = protocol.Request;
 var Response = protocol.Response;
@@ -14,6 +15,13 @@ describe('protocol', function () {
       'method': Request.Method.TAKE,
     });
     request.encodeDelimited().toBuffer();
+  });
+
+  it('should contain all request methods', function () {
+    var methods = Object.keys(Request.Method);
+    assert.include(methods, 'TAKE');
+    assert.include(methods, 'WAIT');
+    assert.include(methods, 'PUT');
   });
 
   it('should be able to serialize a Response', function () {
