@@ -12,5 +12,13 @@
     "chai": "~2.2.0",
     "mocha": "~2.2.4",
     "protobufjs": "~4.0.0-b2"
+  },
+  "homepage": "https://github.com/limitd/protocol",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/limitd/protocol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/limitd/protocol/issues"
   }
 }
