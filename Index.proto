@@ -1,4 +1,4 @@
 package limitd;
 
-import "messages/Request.proto";
-import "messages/Response.proto";
+import public "messages/Request.proto";
+import public "messages/Response.proto";
