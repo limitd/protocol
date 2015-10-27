@@ -6,9 +6,10 @@ message Response {
   required string request_id = 1;
 
   enum Type {
-    ERROR = 1;
-    TAKE = 2;
-    PUT = 3;
+    ERROR  = 1;
+    TAKE   = 2;
+    PUT    = 3;
+    STATUS = 4;
   }
 
   required Type type = 2;
@@ -47,4 +48,19 @@ message PutResponse {
   required int32 remaining = 1;
   required int32 reset = 2;
   required int32 limit = 3;
+}
+
+message StatusResponseItem {
+  required string instance  = 1;
+  required int32  remaining = 2;
+  required int32  reset     = 3;
+  required int32  limit     = 4;
+}
+
+message StatusResponse {
+  extend Response {
+    optional StatusResponse response = 103;
+  }
+
+  repeated StatusResponseItem items = 1;
 }
