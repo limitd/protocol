@@ -10,6 +10,7 @@ message Request {
     WAIT   = 1;
     PUT    = 2;
     STATUS = 3;
+    PING   = 4;
   }
 
   required Method method = 4;

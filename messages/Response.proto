@@ -10,6 +10,7 @@ message Response {
     TAKE   = 2;
     PUT    = 3;
     STATUS = 4;
+    PONG   = 5;
   }
 
   required Type type = 2;
@@ -63,4 +64,10 @@ message StatusResponse {
   }
 
   repeated StatusResponseItem items = 1;
+}
+
+message PongResponse {
+  extend Response {
+    optional PongResponse response = 104;
+  }
 }
