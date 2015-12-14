@@ -4,16 +4,6 @@ message Response {
   extensions 100 to max;
 
   required string request_id = 1;
-
-  enum Type {
-    ERROR  = 1;
-    TAKE   = 2;
-    PUT    = 3;
-    STATUS = 4;
-    PONG   = 5;
-  }
-
-  required Type type = 2;
 }
 
 message ErrorResponse {
