@@ -4,11 +4,15 @@
   "private": true,
   "description": "The ",
   "scripts": {
+    "build": "protoc --js_out=import_style=commonjs,binary:. Index.proto messages/Request.proto messages/Response.proto",
     "test": "mocha"
   },
+  "main": "./Index_pb.js",
   "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "google-protobuf": "^3.2.0"
+  },
   "devDependencies": {
     "chai": "~2.2.0",
     "mocha": "~2.2.4",
