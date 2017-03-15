@@ -11,7 +11,6 @@
   "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
   "license": "MIT",
   "dependencies": {
-    "google-protobuf": "^3.2.0",
     "pbf": "^3.0.5"
   },
   "devDependencies": {
