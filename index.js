@@ -1,7 +1,7 @@
 const Request  = require('./messages/Request').Request;
 const Response = require('./messages/Response').Response;
 const PBF      = require('pbf');
-
+const toBuffer = require('typedarray-to-buffer');
 
 module.exports = {
   Response: {
@@ -12,7 +12,7 @@ module.exports = {
     encode(obj) {
       const pbf = new PBF();
       Response.write(obj, pbf);
-      return pbf.finish();
+      return toBuffer(pbf.finish());
     }
   },
   Request: {
@@ -23,7 +23,7 @@ module.exports = {
     encode(obj) {
       const pbf = new PBF();
       Request.write(obj, pbf);
-      return pbf.finish();
+      return toBuffer(pbf.finish());
     }
   }
 };

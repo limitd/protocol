@@ -15,7 +15,7 @@ describe('protocol', function () {
         }
       });
 
-      assert.instanceOf(encoded, Uint8Array);
+      assert.instanceOf(encoded, Buffer);
 
       const decoded = Protocol.Response.decode(encoded);
 
@@ -35,7 +35,7 @@ describe('protocol', function () {
         }
       });
 
-      assert.instanceOf(encoded, Uint8Array);
+      assert.instanceOf(encoded, Buffer);
 
       const decoded = Protocol.Response.decode(encoded);
 
@@ -55,7 +55,7 @@ describe('protocol', function () {
         count:  2
       });
 
-      assert.instanceOf(encoded, Uint8Array);
+      assert.instanceOf(encoded, Buffer);
 
       const decoded = Protocol.Request.decode(encoded);
 
@@ -75,7 +75,7 @@ describe('protocol', function () {
         count:  2
       });
 
-      assert.instanceOf(encoded, Uint8Array);
+      assert.instanceOf(encoded, Buffer);
 
       const decoded = Protocol.Request.decode(encoded);
 
