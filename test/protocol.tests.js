@@ -1,45 +1,89 @@
-var protocol = require('./protocol');
-var assert = require('chai').assert;
+const assert = require('chai').assert;
+const Protocol = require('../index');
 
-var Request = protocol.Request;
-var Response = protocol.Response;
-var TakeResponse = protocol.TakeResponse;
 
 describe('protocol', function () {
+  describe('response', function(){
+    it('should be able to encode/decode a take response', function () {
+      const encoded = Protocol.Response.encode({
+        request_id: 'abcdefg',
+        'take': {
+          conformant: false,
+          remaining: 10,
+          reset: 20,
+          limit: 30
+        }
+      });
 
-  it('should be able to serialize a Request', function () {
-    var request = new Request({
-      'id':     'foobar',
-      'type':   'bucket1',
-      'key':    '123',
-      'method': Request.Method.TAKE,
-    });
-    request.encodeDelimited().toBuffer();
-  });
+      assert.instanceOf(encoded, Uint8Array);
 
-  it('should contain all request methods', function () {
-    var methods = Object.keys(Request.Method);
-    assert.include(methods, 'TAKE');
-    assert.include(methods, 'WAIT');
-    assert.include(methods, 'PUT');
-  });
+      const decoded = Protocol.Response.decode(encoded);
 
-  it('should be able to serialize a Response', function () {
-
-    var response = new Response({
-      request_id: 'foobar',
-      type: Response.Type.TAKE
-    });
-
-    var takeResponse = new TakeResponse({
-      conformant: true,
-      delayed:    false,
-      remaining:  1,
-      reset:      12345,
-      limit:      10
+      assert.equal(decoded.request_id, 'abcdefg');
+      assert.equal(decoded.body, 'take');
+      assert.equal(decoded.take.conformant, false);
+      assert.equal(decoded.take.remaining, 10);
+      assert.equal(decoded.take.reset, 20);
+      assert.equal(decoded.take.limit, 30);
     });
 
-    takeResponse.encodeDelimited().toBuffer();
+    it('should be able to encode/decode an error response', function () {
+      const encoded = Protocol.Response.encode({
+        request_id: 'abcdefg',
+        'error': {
+          type: 'UNKNOWN_BUCKET_TYPE'
+        }
+      });
+
+      assert.instanceOf(encoded, Uint8Array);
+
+      const decoded = Protocol.Response.decode(encoded);
+
+      assert.equal(decoded.request_id, 'abcdefg');
+      assert.equal(decoded.body, 'error');
+      assert.equal(decoded.error.type, 'UNKNOWN_BUCKET_TYPE');
+    });
   });
 
+  describe('request', function(){
+    it('should be able to encode/decode TAKE', function () {
+      const encoded = Protocol.Request.encode({
+        id:     'abcdefg',
+        method: 'TAKE',
+        type:   'foo',
+        key:    'bar',
+        count:  2
+      });
+
+      assert.instanceOf(encoded, Uint8Array);
+
+      const decoded = Protocol.Request.decode(encoded);
+
+      assert.equal(decoded.id,     'abcdefg');
+      assert.equal(decoded.method, 'TAKE');
+      assert.equal(decoded.type,   'foo');
+      assert.equal(decoded.key,    'bar');
+      assert.equal(decoded.count,  2);
+    });
+
+    it('should be able to encode/decode a PUT', function () {
+      const encoded = Protocol.Request.encode({
+        id:     'abcdefg',
+        method: 'PUT',
+        type:   'foo',
+        key:    'bar',
+        count:  2
+      });
+
+      assert.instanceOf(encoded, Uint8Array);
+
+      const decoded = Protocol.Request.decode(encoded);
+
+      assert.equal(decoded.id,     'abcdefg');
+      assert.equal(decoded.method, 'PUT');
+      assert.equal(decoded.type,   'foo');
+      assert.equal(decoded.key,    'bar');
+      assert.equal(decoded.count,  2);
+    });
+  });
 });

@@ -4,19 +4,20 @@
   "private": true,
   "description": "The ",
   "scripts": {
-    "build": "protoc --js_out=import_style=commonjs,binary:. Index.proto messages/Request.proto messages/Response.proto",
+    "build": "pbf messages/Request.proto > messages/Request.js && pbf messages/Response.proto > messages/Response.js",
     "test": "mocha"
   },
   "main": "./Index_pb.js",
   "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
   "license": "MIT",
   "dependencies": {
-    "google-protobuf": "^3.2.0"
+    "google-protobuf": "^3.2.0",
+    "pbf": "^3.0.5"
   },
   "devDependencies": {
     "chai": "~2.2.0",
     "mocha": "~2.2.4",
-    "protobufjs": "~4.0.0-b2"
+    "protobufjs": "^6.6.5"
   },
   "homepage": "https://github.com/limitd/protocol",
   "repository": {
