@@ -1,18 +1,8 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package limitd;
 
-message Response {
-  extensions 100 to max;
-
-  required string request_id = 1;
-}
-
 message ErrorResponse {
-  extend Response {
-    optional ErrorResponse response = 100;
-  }
-
   enum Type {
     UNKNOWN_BUCKET_TYPE = 1;
   }
@@ -21,10 +11,6 @@ message ErrorResponse {
 }
 
 message TakeResponse {
-  extend Response {
-    optional TakeResponse response = 101;
-  }
-
   required bool conformant = 1;
   optional bool delayed = 2 [default = false];
 
@@ -34,10 +20,6 @@ message TakeResponse {
 }
 
 message PutResponse {
-  extend Response {
-    optional PutResponse response = 102;
-  }
-
   required int32 remaining = 1;
   required int32 reset = 2;
   required int32 limit = 3;
@@ -51,15 +33,23 @@ message StatusResponseItem {
 }
 
 message StatusResponse {
-  extend Response {
-    optional StatusResponse response = 103;
-  }
-
   repeated StatusResponseItem items = 1;
 }
 
-message PongResponse {
-  extend Response {
-    optional PongResponse response = 104;
+message PongResponse { }
+
+message Response {
+  extensions 100 to max;
+
+  required string request_id = 1;
+
+  oneof body {
+    ErrorResponse  error   = 100;
+    TakeResponse   take    = 101;
+    PutResponse    put     = 102;
+    StatusResponse status  = 103;
+    PongResponse   pong    = 104;
   }
 }
+
+
