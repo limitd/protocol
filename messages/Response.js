@@ -122,10 +122,17 @@ Response._readField = function (tag, obj, pbf) {
     else if (tag === 104) obj.pong = PongResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "pong";
 };
 Response.write = function (obj, pbf) {
-    if (obj.request_id) pbf.writeStringField(1, obj.request_id);
-    if (obj.error) pbf.writeMessage(100, ErrorResponse.write, obj.error);
-    if (obj.take) pbf.writeMessage(101, TakeResponse.write, obj.take);
-    if (obj.put) pbf.writeMessage(102, PutResponse.write, obj.put);
-    if (obj.status) pbf.writeMessage(103, StatusResponse.write, obj.status);
-    if (obj.pong) pbf.writeMessage(104, PongResponse.write, obj.pong);
+    pbf.writeStringField(1, obj.request_id);
+
+    if (obj.take) {
+        pbf.writeMessage(101, TakeResponse.write, obj.take);
+    } else if (obj.error) {
+        pbf.writeMessage(100, ErrorResponse.write, obj.error);
+    } else if (obj.put) {
+        pbf.writeMessage(102, PutResponse.write, obj.put);
+    } else if (obj.status) {
+        pbf.writeMessage(103, StatusResponse.write, obj.status);
+    } else if (obj.pong) {
+        pbf.writeMessage(104, PongResponse.write, obj.pong);
+    }
 };
