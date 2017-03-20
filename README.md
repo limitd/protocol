@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/limitd/protocol.svg)](https://travis-ci.org/limitd/protocol)
+
 This repository contains the definition of the limitd protocol.
 
 > **Warning:** it contains some `.js` files for tests but it is not inteded for node.js only.
