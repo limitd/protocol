@@ -2,8 +2,8 @@ const Request  = require('./messages/Request').Request;
 const Response = require('./messages/Response').Response;
 const PBF      = require('pbf');
 
-var responseEncodingLength = 32;
-var requestEncodingLength = 32;
+const responseDecodingBuffer = new Uint8Array(64);
+const requestDecodingBuffer = new Uint8Array(64);
 
 module.exports = {
   Response: {
@@ -12,12 +12,9 @@ module.exports = {
       return Response.read(pbf);
     },
     encode(obj) {
-      const pbf = new PBF(responseEncodingLength);
+      const pbf = new PBF(responseDecodingBuffer);
       Response.write(obj, pbf);
-      const result = new Buffer(pbf.finish());
-      const length = Math.ceil(result.length / 16) * 16;
-      responseEncodingLength = Math.max(length, responseEncodingLength);
-      return result;
+      return new Buffer(pbf.finish());
     }
   },
   Request: {
@@ -26,14 +23,9 @@ module.exports = {
       return Request.read(pbf);
     },
     encode(obj) {
-      const pbf = new PBF(requestEncodingLength);
+      const pbf = new PBF(requestDecodingBuffer);
       Request.write(obj, pbf);
-
-      const result = new Buffer(pbf.finish());
-      const length = Math.ceil(result.length / 16) * 16;
-      responseEncodingLength = Math.max(length, requestEncodingLength);
-
-      return result;
+      return new Buffer(pbf.finish());
     }
   }
 };
