@@ -120,9 +120,15 @@ Response._readField = function (tag, obj, pbf) {
     else if (tag === 102) obj.put = PutResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "put";
     else if (tag === 103) obj.status = StatusResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "status";
     else if (tag === 104) obj.pong = PongResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "pong";
+    else if (tag === 20)  obj.request_id = pbf.readVarint();
 };
+
 Response.write = function (obj, pbf) {
-    pbf.writeStringField(1, obj.request_id);
+    if (typeof obj.request_id === 'number') {
+        pbf.writeVarintField(20, obj.request_id);
+    } else if (typeof obj.request_id === 'string') {
+        pbf.writeStringField(1, obj.request_id);
+    }
 
     if (obj.take) {
         pbf.writeMessage(101, TakeResponse.write, obj.take);

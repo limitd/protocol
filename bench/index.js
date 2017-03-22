@@ -13,15 +13,15 @@ const response = {
 };
 
 const request = {
-  id:     'abcdefg',
+  id:     50,
   method: 'TAKE',
-  type:   'foo',
-  key:    'bar',
+  type:   'aaaabfdadasaaaabfdadasaaaabfdadasaaaabfdadasaaaabfdadasaaaabfdadas',
+  key:    'barbarbarbarbarbarbarbarbarbar',
   count:  2
 };
 
-const encodedRequest = Protocol.Request.encode(request);
 
+const encodedRequest = Protocol.Request.encode(request);
 const encodedResponse = Protocol.Response.encode(response);
 
 suite

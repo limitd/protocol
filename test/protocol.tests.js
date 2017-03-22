@@ -19,12 +19,35 @@ describe('protocol', function () {
 
       const decoded = Protocol.Response.decode(encoded);
 
-      assert.equal(decoded.request_id, 'abcdefg');
-      assert.equal(decoded.body, 'take');
-      assert.equal(decoded.take.conformant, false);
-      assert.equal(decoded.take.remaining, 10);
-      assert.equal(decoded.take.reset, 20);
-      assert.equal(decoded.take.limit, 30);
+      assert.deepEqual(decoded.request_id, 'abcdefg');
+      assert.deepEqual(decoded.body, 'take');
+      assert.deepEqual(decoded.take.conformant, false);
+      assert.deepEqual(decoded.take.remaining, 10);
+      assert.deepEqual(decoded.take.reset, 20);
+      assert.deepEqual(decoded.take.limit, 30);
+    });
+
+    it('should be able to encode/decode a take response with numeric request_id', function () {
+      const encoded = Protocol.Response.encode({
+        request_id: 123,
+        'take': {
+          conformant: false,
+          remaining: 10,
+          reset: 20,
+          limit: 30
+        }
+      });
+
+      assert.instanceOf(encoded, Buffer);
+
+      const decoded = Protocol.Response.decode(encoded);
+
+      assert.deepEqual(decoded.request_id, 123);
+      assert.deepEqual(decoded.body, 'take');
+      assert.deepEqual(decoded.take.conformant, false);
+      assert.deepEqual(decoded.take.remaining, 10);
+      assert.deepEqual(decoded.take.reset, 20);
+      assert.deepEqual(decoded.take.limit, 30);
     });
 
     it('should be able to encode/decode an error response', function () {
@@ -39,16 +62,16 @@ describe('protocol', function () {
 
       const decoded = Protocol.Response.decode(encoded);
 
-      assert.equal(decoded.request_id, 'abcdefg');
-      assert.equal(decoded.body, 'error');
-      assert.equal(decoded.error.type, 'UNKNOWN_BUCKET_TYPE');
+      assert.deepEqual(decoded.request_id, 'abcdefg');
+      assert.deepEqual(decoded.body, 'error');
+      assert.deepEqual(decoded.error.type, 'UNKNOWN_BUCKET_TYPE');
     });
   });
 
   describe('request', function(){
     it('should be able to encode/decode TAKE', function () {
       const encoded = Protocol.Request.encode({
-        id:     'abcdefg',
+        id:     '1233',
         method: 'TAKE',
         type:   'foo',
         key:    'bar',
@@ -59,11 +82,31 @@ describe('protocol', function () {
 
       const decoded = Protocol.Request.decode(encoded);
 
-      assert.equal(decoded.id,     'abcdefg');
-      assert.equal(decoded.method, 'TAKE');
-      assert.equal(decoded.type,   'foo');
-      assert.equal(decoded.key,    'bar');
-      assert.equal(decoded.count,  2);
+      assert.deepEqual(decoded.id,     '1233');
+      assert.deepEqual(decoded.method, 'TAKE');
+      assert.deepEqual(decoded.type,   'foo');
+      assert.deepEqual(decoded.key,    'bar');
+      assert.deepEqual(decoded.count,  2);
+    });
+
+    it('should be able to encode/decode TAKE with integer id', function () {
+      const encoded = Protocol.Request.encode({
+        id:     1233,
+        method: 'TAKE',
+        type:   'foo',
+        key:    'bar',
+        count:  2
+      });
+
+      assert.instanceOf(encoded, Buffer);
+
+      const decoded = Protocol.Request.decode(encoded);
+
+      assert.deepEqual(decoded.id,     1233);
+      assert.deepEqual(decoded.method, 'TAKE');
+      assert.deepEqual(decoded.type,   'foo');
+      assert.deepEqual(decoded.key,    'bar');
+      assert.deepEqual(decoded.count,  2);
     });
 
     it('should be able to encode/decode a PUT', function () {
@@ -79,11 +122,11 @@ describe('protocol', function () {
 
       const decoded = Protocol.Request.decode(encoded);
 
-      assert.equal(decoded.id,     'abcdefg');
-      assert.equal(decoded.method, 'PUT');
-      assert.equal(decoded.type,   'foo');
-      assert.equal(decoded.key,    'bar');
-      assert.equal(decoded.count,  2);
+      assert.deepEqual(decoded.id,     'abcdefg');
+      assert.deepEqual(decoded.method, 'PUT');
+      assert.deepEqual(decoded.type,   'foo');
+      assert.deepEqual(decoded.key,    'bar');
+      assert.deepEqual(decoded.count,  2);
     });
   });
 });

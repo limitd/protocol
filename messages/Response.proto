@@ -39,9 +39,8 @@ message StatusResponse {
 message PongResponse { }
 
 message Response {
-  extensions 100 to max;
-
-  required string request_id = 1;
+  optional string request_id = 1;
+  optional int32 request_id2 = 20;
 
   oneof body {
     ErrorResponse  error   = 100;

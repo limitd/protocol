@@ -3,7 +3,9 @@ syntax = "proto3";
 package limitd;
 
 message Request {
-  required string id = 1;
+  optional string id = 1 [deprecated = true];
+  optional int32 id2 = 20;
+
   required string type = 2;
   required string key = 3;
 
@@ -17,6 +19,6 @@ message Request {
 
   required Method method = 4;
 
-  optional int32  count = 5 [default = 1];
-  optional bool   all   = 6 [default = false];
+  optional int32  count  = 5 [default = 1];
+  optional bool   all    = 6 [default = false];
 }

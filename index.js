@@ -2,13 +2,13 @@ const Request  = require('./messages/Request').Request;
 const Response = require('./messages/Response').Response;
 const PBF      = require('pbf');
 
-const responseDecodingBuffer = new Uint8Array(64);
-const requestDecodingBuffer = new Uint8Array(64);
+const responseDecodingBuffer = new Uint8Array(128);
+const requestDecodingBuffer = new Uint8Array(128);
 
 module.exports = {
   Response: {
     decode(buffer) {
-      const pbf = new PBF(buffer);
+      const pbf = new PBF(buffer, buffer.length);
       return Response.read(pbf);
     },
     encode(obj) {
@@ -20,7 +20,7 @@ module.exports = {
   Request: {
     decode(buffer) {
       const pbf = new PBF(buffer);
-      return Request.read(pbf);
+      return Request.read(pbf, buffer.length);
     },
     encode(obj) {
       const pbf = new PBF(requestDecodingBuffer);

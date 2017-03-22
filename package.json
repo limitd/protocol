@@ -11,6 +11,7 @@
   "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
   "license": "MIT",
   "dependencies": {
+    "hashlru": "jfromaniello/hashlru#return_value_on_set",
     "pbf": "^3.0.5",
     "typedarray-to-buffer": "^3.1.2"
   },
