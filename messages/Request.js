@@ -8,7 +8,15 @@ const LRU = require('hashlru');
 var Request = exports.Request = {};
 
 Request.read = function (pbf, end) {
-    return pbf.readFields(Request._readField, { id: "", type: "", key: "", method: 0, count: 1, all: false }, end);
+    return pbf.readFields(Request._readField, {
+        id:      "",
+        type:    "",
+        key:     "",
+        method:  0,
+        count:   1,
+        all:     false,
+        skipResponse: false
+    }, end);
 };
 
 Request._readField = function (tag, obj, pbf) {
@@ -30,6 +38,9 @@ Request._readField = function (tag, obj, pbf) {
             break;
         case 6:
             obj.all = pbf.readBoolean();
+            break;
+        case 7:
+            obj.skipResponse = pbf.readBoolean();
             break;
         case 20:
             obj.id = pbf.readVarint(true);
@@ -54,8 +65,15 @@ Request.write = function (obj, pbf) {
     if (obj.method) {
         pbf.writeVarintField(4, this.Method[obj.method]);
     }
-    if (typeof obj.count !== 'undefined' && obj.count !== 1) pbf.writeVarintField(5, obj.count);
-    if (obj.all) pbf.writeBooleanField(6, obj.all);
+    if (typeof obj.count !== 'undefined' && obj.count !== 1) {
+        pbf.writeVarintField(5, obj.count);
+    }
+    if (obj.all) {
+        pbf.writeBooleanField(6, obj.all);
+    }
+    if (obj.skipResponse) {
+        pbf.writeBooleanField(7, obj.skipResponse);
+    }
 };
 
 Request.Method = {

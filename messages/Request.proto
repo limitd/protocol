@@ -19,6 +19,7 @@ message Request {
 
   required Method method = 4;
 
-  optional int32  count  = 5 [default = 1];
-  optional bool   all    = 6 [default = false];
+  optional int32 count = 5 [default = 1];
+  optional bool all = 6 [default = false];
+  optional bool skipResponse = 7 [default = false];
 }

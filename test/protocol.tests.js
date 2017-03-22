@@ -71,22 +71,23 @@ describe('protocol', function () {
   describe('request', function(){
     it('should be able to encode/decode TAKE', function () {
       const encoded = Protocol.Request.encode({
-        id:     '1233',
+        id: '1233',
         method: 'TAKE',
-        type:   'foo',
-        key:    'bar',
-        count:  2
+        type: 'foo',
+        key: 'bar',
+        count: 2
       });
 
       assert.instanceOf(encoded, Buffer);
 
       const decoded = Protocol.Request.decode(encoded);
 
-      assert.deepEqual(decoded.id,     '1233');
+      assert.deepEqual(decoded.id, '1233');
       assert.deepEqual(decoded.method, 'TAKE');
-      assert.deepEqual(decoded.type,   'foo');
-      assert.deepEqual(decoded.key,    'bar');
-      assert.deepEqual(decoded.count,  2);
+      assert.deepEqual(decoded.type, 'foo');
+      assert.deepEqual(decoded.key, 'bar');
+      assert.deepEqual(decoded.count, 2);
+      assert.deepEqual(decoded.skipResponse, false);
     });
 
     it('should be able to encode/decode TAKE with integer id', function () {
@@ -95,18 +96,20 @@ describe('protocol', function () {
         method: 'TAKE',
         type:   'foo',
         key:    'bar',
-        count:  2
+        count:  2,
+        skipResponse: true
       });
 
       assert.instanceOf(encoded, Buffer);
 
       const decoded = Protocol.Request.decode(encoded);
 
-      assert.deepEqual(decoded.id,     1233);
+      assert.deepEqual(decoded.id, 1233);
       assert.deepEqual(decoded.method, 'TAKE');
-      assert.deepEqual(decoded.type,   'foo');
-      assert.deepEqual(decoded.key,    'bar');
-      assert.deepEqual(decoded.count,  2);
+      assert.deepEqual(decoded.type, 'foo');
+      assert.deepEqual(decoded.key, 'bar');
+      assert.deepEqual(decoded.count, 2);
+      assert.deepEqual(decoded.skipResponse, true);
     });
 
     it('should be able to encode/decode a PUT', function () {
