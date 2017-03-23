@@ -36,7 +36,9 @@ message StatusResponse {
   repeated StatusResponseItem items = 1;
 }
 
-message PongResponse { }
+message PongResponse {
+  optional int32 protocol_version = 1
+}
 
 message Response {
   optional string request_id = 1;

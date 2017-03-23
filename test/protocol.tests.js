@@ -27,6 +27,23 @@ describe('protocol', function () {
       assert.deepEqual(decoded.take.limit, 30);
     });
 
+    it('should be able to encode/decode a pong response', function () {
+      const encoded = Protocol.Response.encode({
+        request_id: 'abcdefg',
+        'pong': {
+          protocol_version: 3
+        }
+      });
+
+      assert.instanceOf(encoded, Buffer);
+
+      const decoded = Protocol.Response.decode(encoded);
+
+      assert.deepEqual(decoded.request_id, 'abcdefg');
+      assert.deepEqual(decoded.body, 'pong');
+      assert.deepEqual(decoded.pong.protocol_version, 3);
+    });
+
     it('should be able to encode/decode a take response with numeric request_id', function () {
       const encoded = Protocol.Response.encode({
         request_id: 123,

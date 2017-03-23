@@ -99,11 +99,13 @@ StatusResponse.write = function (obj, pbf) {
 var PongResponse = exports.PongResponse = {};
 
 PongResponse.read = function (pbf, end) {
-    return pbf.readFields(PongResponse._readField, {}, end);
+    return pbf.readFields(PongResponse._readField, { protocol_version: 0 }, end);
 };
 PongResponse._readField = function (tag, obj, pbf) {
+    if (tag === 1) obj.protocol_version = pbf.readVarint(true);
 };
 PongResponse.write = function (obj, pbf) {
+    if (obj.protocol_version) pbf.writeVarintField(1, obj.protocol_version);
 };
 
 // Response ========================================
