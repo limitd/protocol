@@ -3,7 +3,7 @@ const Benchmark = require('benchmark');
 const suite = new Benchmark.Suite();
 
 const response = {
-  request_id: 'abcdefg',
+  request_id: 50,
   'take': {
     conformant: false,
     remaining: 10,
