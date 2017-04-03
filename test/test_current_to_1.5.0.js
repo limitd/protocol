@@ -31,4 +31,20 @@ describe('compatibility with 1.5.0', function () {
     assert.equal(decoded['.limitd.TakeResponse.response'].reset, 20);
     assert.equal(decoded['.limitd.TakeResponse.response'].limit, 30);
   });
+
+
+  it('v1.5.0 should be able to deserialize a ping request', function() {
+    const buffer = Protocol.Request.encode({
+      'id':     '1234',
+      'type':   '',
+      'key':    '',
+      'method': 'PING',
+    });
+
+    const decoded = Protocol15.Request.decode(buffer).toJSON();
+
+    assert.equal(decoded.type, '');
+    assert.equal(decoded.key, '');
+  });
+
 });

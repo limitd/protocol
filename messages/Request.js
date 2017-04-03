@@ -54,14 +54,8 @@ Request.write = function (obj, pbf) {
     } else if(typeof obj.id === 'string') {
         pbf.writeStringField(1, obj.id);
     }
-    if (obj.type) {
-        pbf.writeBytesField(2, tryGet(typeCache, obj.type));
-        // pbf.writeStringField(2, obj.type);
-    }
-    if (obj.key) {
-        pbf.writeBytesField(3, tryGet(keyCache, obj.key));
-        // pbf.writeStringField(3, obj.key);
-    }
+    pbf.writeBytesField(2, tryGet(typeCache, obj.type));
+    pbf.writeBytesField(3, tryGet(keyCache, obj.key));
     if (obj.method) {
         pbf.writeVarintField(4, this.Method[obj.method]);
     }
