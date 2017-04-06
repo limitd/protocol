@@ -75,9 +75,9 @@ StatusResponseItem._readField = function (tag, obj, pbf) {
 };
 StatusResponseItem.write = function (obj, pbf) {
     if (obj.instance) pbf.writeStringField(1, obj.instance);
-    if (obj.remaining) pbf.writeVarintField(2, obj.remaining);
-    if (obj.reset) pbf.writeVarintField(3, obj.reset);
-    if (obj.limit) pbf.writeVarintField(4, obj.limit);
+    pbf.writeVarintField(2, obj.remaining || 0);
+    pbf.writeVarintField(3, obj.reset || 0);
+    pbf.writeVarintField(4, obj.limit || 0);
 };
 
 // StatusResponse ========================================

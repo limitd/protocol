@@ -47,4 +47,18 @@ describe('compatibility with 1.5.0', function () {
     assert.equal(decoded.key, '');
   });
 
+
+  it('v1.5.0 should be able to deserialize an status response', function() {
+    const buffer = Protocol.Response.encode({
+      request_id: 'abcdefg',
+      'status': {
+        items: [ { instance: 'a', reset: 0 , remaining: 1} ]
+      }
+    });
+
+    const decoded = Protocol15.Response.decode(buffer).toJSON();
+
+    assert.equal(decoded['.limitd.StatusResponse.response'].items[0].reset, 0);
+  });
+
 });
