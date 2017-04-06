@@ -55,9 +55,9 @@ PutResponse._readField = function (tag, obj, pbf) {
     else if (tag === 3) obj.limit = pbf.readVarint(true);
 };
 PutResponse.write = function (obj, pbf) {
-    if (obj.remaining) pbf.writeVarintField(1, obj.remaining);
-    if (obj.reset) pbf.writeVarintField(2, obj.reset);
-    if (obj.limit) pbf.writeVarintField(3, obj.limit);
+    pbf.writeVarintField(1, obj.remaining || 0);
+    pbf.writeVarintField(2, obj.reset || 0);
+    pbf.writeVarintField(3, obj.limit || 0);
 };
 
 // StatusResponseItem ========================================
