@@ -73,4 +73,19 @@ describe('compatibility with 1.5.0', function () {
     assert.equal(decoded['.limitd.PutResponse.response'].reset, 0);
   });
 
+
+  it('v1.5.0 should be able to deserialize a put response', function() {
+    const buffer = Protocol.Response.encode({
+      request_id: 'abcdefg',
+      'take': { conformant: false, delayed: false, remaining: 0, reset: 0, limit: 0 }
+    });
+
+    const decoded = Protocol15.Response.decode(buffer).toJSON();
+
+    assert.equal(decoded['.limitd.TakeResponse.response'].delayed, undefined);
+    assert.equal(decoded['.limitd.TakeResponse.response'].remaining, 0);
+    assert.equal(decoded['.limitd.TakeResponse.response'].reset, 0);
+    assert.equal(decoded['.limitd.TakeResponse.response'].limit, 0);
+  });
+
 });

@@ -37,9 +37,9 @@ TakeResponse._readField = function (tag, obj, pbf) {
 TakeResponse.write = function (obj, pbf) {
     if (typeof obj.conformant !== 'undefined') pbf.writeBooleanField(1, obj.conformant);
     if (obj.delayed) pbf.writeBooleanField(2, obj.delayed);
-    if (obj.remaining) pbf.writeVarintField(3, obj.remaining);
-    if (obj.reset) pbf.writeVarintField(4, obj.reset);
-    if (obj.limit) pbf.writeVarintField(5, obj.limit);
+    pbf.writeVarintField(3, obj.remaining);
+    pbf.writeVarintField(4, obj.reset);
+    pbf.writeVarintField(5, obj.limit);
 };
 
 // PutResponse ========================================
