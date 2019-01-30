@@ -7,9 +7,13 @@ This repository contains the definition of the limitd protocol.
 Implementors of client libraries are supposed to use this repository.
 
 ## Develop
-
+### Cloning
 This repo makes use of git submodules. After cloning, do `git submodule update --init`.
 
+### Building
+Do not use `npm run build`. This library has modified the generated files to maintain backwards compatibility.
+
+### Test
 Run the test suite as follows:
 
 ```
