@@ -75,7 +75,8 @@ Request.Method = {
     "WAIT":   1,
     "PUT":    2,
     "STATUS": 3,
-    "PING":   4
+    "PING":   4,
+    "GET":    5
 };
 
 const ReverseMethodMap = Object.keys(Request.Method).reduce((result, key) => {
