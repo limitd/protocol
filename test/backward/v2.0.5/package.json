@@ -1,0 +1,32 @@
+{
+  "name": "limitd-protocol",
+  "version": "2.0.5",
+  "private": true,
+  "description": "The ",
+  "scripts": {
+    "build": "pbf messages/Request.proto > messages/Request.js && pbf messages/Response.proto > messages/Response.js",
+    "test": "mocha"
+  },
+  "main": "./Index_pb.js",
+  "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
+  "license": "MIT",
+  "dependencies": {
+    "hashlru": "jfromaniello/hashlru#return_value_on_set",
+    "pbf": "^3.0.5",
+    "typedarray-to-buffer": "^3.1.2"
+  },
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "chai": "~2.2.0",
+    "mocha": "~2.2.4",
+    "protobufjs": "^6.6.5"
+  },
+  "homepage": "https://github.com/limitd/protocol",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/limitd/protocol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/limitd/protocol/issues"
+  }
+}
