@@ -6,4 +6,4 @@
 	url = https://github.com/limitd/protocol.git
 [submodule "test/backward/v2.0.5"]
 	path = test/backward/v2.0.5
-	url = git@github.com:limitd/protocol.git
+	url = https://github.com/limitd/protocol.git
