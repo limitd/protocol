@@ -1,6 +1,0 @@
-syntax = "proto2";
-
-package limitd;
-
-import public "messages/Request.proto";
-import public "messages/Response.proto";
