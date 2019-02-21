@@ -27,6 +27,12 @@ message PutResponse {
   int32 limit = 3;
 }
 
+message GetResponse {
+  int32 remaining = 1;
+  int32 reset = 2;
+  int32 limit = 3;
+}
+
 message StatusResponseItem {
   string instance  = 1;
   int32  remaining = 2;
@@ -52,6 +58,7 @@ message Response {
     PutResponse    put     = 102;
     StatusResponse status  = 103;
     PongResponse   pong    = 104;
+    GetResponse    get     = 105;
   }
 }
 

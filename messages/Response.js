@@ -60,6 +60,24 @@ PutResponse.write = function (obj, pbf) {
     pbf.writeVarintField(3, obj.limit || 0);
 };
 
+// GetResponse ========================================
+
+var GetResponse = exports.GetResponse = {};
+
+GetResponse.read = function (pbf, end) {
+    return pbf.readFields(GetResponse._readField, {remaining: 0, reset: 0, limit: 0}, end);
+};
+GetResponse._readField = function (tag, obj, pbf) {
+    if (tag === 1) obj.remaining = pbf.readVarint(true);
+    else if (tag === 2) obj.reset = pbf.readVarint(true);
+    else if (tag === 3) obj.limit = pbf.readVarint(true);
+};
+GetResponse.write = function (obj, pbf) {
+    pbf.writeVarintField(1, obj.remaining || 0);
+    pbf.writeVarintField(2, obj.reset || 0);
+    pbf.writeVarintField(3, obj.limit || 0);
+};
+
 // StatusResponseItem ========================================
 
 var StatusResponseItem = exports.StatusResponseItem = {};
@@ -113,7 +131,7 @@ PongResponse.write = function (obj, pbf) {
 var Response = exports.Response = {};
 
 Response.read = function (pbf, end) {
-    return pbf.readFields(Response._readField, {request_id: "", error: null, body: null, take: null, put: null, status: null, pong: null}, end);
+    return pbf.readFields(Response._readField, {request_id: "", error: null, body: null, take: null, put: null, status: null, pong: null, get: null}, end);
 };
 Response._readField = function (tag, obj, pbf) {
     if (tag === 1) obj.request_id = pbf.readString();
@@ -122,6 +140,7 @@ Response._readField = function (tag, obj, pbf) {
     else if (tag === 102) obj.put = PutResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "put";
     else if (tag === 103) obj.status = StatusResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "status";
     else if (tag === 104) obj.pong = PongResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "pong";
+    else if (tag === 105) obj.get = GetResponse.read(pbf, pbf.readVarint() + pbf.pos), obj.body = "get";
     else if (tag === 20)  obj.request_id = pbf.readVarint();
 };
 
@@ -142,5 +161,7 @@ Response.write = function (obj, pbf) {
         pbf.writeMessage(103, StatusResponse.write, obj.status);
     } else if (obj.pong) {
         pbf.writeMessage(104, PongResponse.write, obj.pong);
+    } else if (obj.get) {
+        pbf.writeMessage(105, GetResponse.write, obj.get);
     }
 };

@@ -15,6 +15,7 @@ message Request {
     PUT    = 2;
     STATUS = 3;
     PING   = 4;
+    GET    = 5;
   }
 
   Method method = 4;

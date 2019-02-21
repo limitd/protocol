@@ -4,3 +4,6 @@
 [submodule "test/backward/v1.5.0"]
 	path = test/backward/v1.5.0
 	url = https://github.com/limitd/protocol.git
+[submodule "test/backward/v2.0.5"]
+	path = test/backward/v2.0.5
+	url = https://github.com/limitd/protocol.git

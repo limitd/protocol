@@ -67,6 +67,27 @@ describe('protocol', function () {
       assert.deepEqual(decoded.take.limit, 30);
     });
 
+    it('should be able to encode/decode a get response', function () {
+      const encoded = Protocol.Response.encode({
+        request_id: 'abcdefg',
+        'get': {
+          remaining: 10,
+          reset: 20,
+          limit: 30
+        }
+      });
+
+      assert.instanceOf(encoded, Buffer);
+
+      const decoded = Protocol.Response.decode(encoded);
+
+      assert.deepEqual(decoded.request_id, 'abcdefg');
+      assert.deepEqual(decoded.body, 'get');
+      assert.deepEqual(decoded.get.remaining, 10);
+      assert.deepEqual(decoded.get.reset, 20);
+      assert.deepEqual(decoded.get.limit, 30);
+    });
+
     it('should be able to encode/decode an error response', function () {
       const encoded = Protocol.Response.encode({
         request_id: 'abcdefg',
@@ -147,6 +168,24 @@ describe('protocol', function () {
       assert.deepEqual(decoded.type,   'foo');
       assert.deepEqual(decoded.key,    'bar');
       assert.deepEqual(decoded.count,  2);
+    });
+
+    it('should be able to encode/decode a GET', function () {
+      const encoded = Protocol.Request.encode({
+        id:     'abcdefg',
+        method: 'GET',
+        type:   'foo',
+        key:    'bar',
+      });
+
+      assert.instanceOf(encoded, Buffer);
+
+      const decoded = Protocol.Request.decode(encoded);
+
+      assert.deepEqual(decoded.id,     'abcdefg');
+      assert.deepEqual(decoded.method, 'GET');
+      assert.deepEqual(decoded.type,   'foo');
+      assert.deepEqual(decoded.key,    'bar');
     });
   });
 });
