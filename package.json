@@ -1,13 +1,12 @@
 {
   "name": "limitd-protocol",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
   "description": "The ",
   "scripts": {
     "build": "pbf messages/Request.proto > messages/Request.js && pbf messages/Response.proto > messages/Response.js",
     "test": "mocha"
   },
-  "main": "./Index_pb.js",
   "author": "Jose F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
   "license": "MIT",
   "dependencies": {
